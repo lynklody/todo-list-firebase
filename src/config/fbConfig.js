@@ -3,7 +3,8 @@
  import 'firebase/auth'
  
   // Your web app's Firebase configuration
-  var firebaseConfig = {
+
+  const firebaseConfig = {
     apiKey: "AIzaSyAIaA5qkCnTKM3IAZL52Mee-XzDN3Llf84",
     authDomain: "todo-backend-4142d.firebaseapp.com",
     databaseURL: "https://todo-backend-4142d.firebaseio.com",
@@ -16,8 +17,9 @@
 
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
+  // firebase.analytics();
 
-  firebase.firestore().settings({ timestampsInSnapShots: true})
+  // the net ninja
+  // firebase.firestore().settings({ timestampsInSnapShots: true})
 
   export default firebase;
