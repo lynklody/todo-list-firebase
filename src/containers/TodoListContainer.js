@@ -2,8 +2,9 @@ import { connect } from 'react-redux'
 import TodoList from '../component/TodoList'
 import { toggleTodo, fetchTodos } from '../actions'
 import { getVisibleTodos } from "../selectors"
-import { firestoreConnect } from 'react-redux-firebase'
+import { firestoreConnect, withFirestore } from 'react-redux-firebase'
 import { compose } from 'redux'
+import { useSelector } from 'redux'
 
 // const getVisibleTodos = (todos, filter) => {
 //     switch (filter) {
@@ -18,10 +19,14 @@ import { compose } from 'redux'
 //     }
 // }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => {
     // todos: getVisibleTodos(state.todos.data, state.filter)
-    todos: getVisibleTodos(state)
-})
+    console.log("state in todolist container:")
+    console.log(state)
+    return {
+        todos: getVisibleTodos(state)
+    }
+}
 
 const mapDispatchToProps = dispatch => ({
     toggleTodo: id => dispatch(toggleTodo(id)),
@@ -33,7 +38,18 @@ export default compose(
         mapStateToProps,
         mapDispatchToProps
     ),
-    firestoreConnect([ // connected to rootreducer firestoreReducer
+    firestoreConnect([ // connected to rootreducer firestoreReducer property
         { collection: 'todos' }
     ])
 )(TodoList);
+
+// export default compose(
+//         withFirestore,
+//         connect(
+//             mapStateToProps,
+//             mapDispatchToProps,
+//             // (state) => ({
+//                 // todos: state.firestore.data.todos
+//             // })
+//         )
+//     )(TodoList);
