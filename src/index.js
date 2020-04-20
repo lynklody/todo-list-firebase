@@ -10,8 +10,9 @@ import loggerEnhancer from "./enhancers/logger"
 import { MuiThemeProvider } from '@material-ui/core'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from './theme'
-import { reduxFirestore, getFirestore } from 'redux-firestore'
-import { reactReduxFirebase, getFirebase } from 'react-redux-firebase'
+import firebase from 'firebase/app'
+import { reduxFirestore, createFirestoreInstance, getFirestore } from 'redux-firestore'
+import { reactReduxFirebase, ReactReduxFirebaseProvider, getFirebase } from 'react-redux-firebase'
 import fbConfig from './config/fbConfig'
 // import * as serviceWorker from './serviceWorker';
 // import store from './store'
@@ -27,17 +28,25 @@ const store = createStore(rootReducer,
                     getFirestore 
                 }), 
             loggerMiddleware),
-        reduxFirestore(fbConfig),
-        reactReduxFirebase(fbConfig)
+        reduxFirestore(firebase, fbConfig)
         )
     );
 
+const rrfProps = {
+    firebase,
+    config: fbConfig,
+    dispatch: store.dispatch,
+    createFirestoreInstance
+    };
+
 ReactDOM.render(
     <Provider store={store}>
-        <MuiThemeProvider theme={theme}>
-            <CssBaseline />
-            <App />
-        </MuiThemeProvider>
+        <ReactReduxFirebaseProvider {...rrfProps}>
+            <MuiThemeProvider theme={theme}>
+                <CssBaseline />
+                <App />
+            </MuiThemeProvider>
+        </ReactReduxFirebaseProvider>
     </Provider>,
     document.getElementById("root")
 );
