@@ -2,6 +2,8 @@ import { connect } from 'react-redux'
 import TodoList from '../component/TodoList'
 import { toggleTodo, fetchTodos } from '../actions'
 import { getVisibleTodos } from "../selectors"
+import { firestoreConnect } from 'react-redux-firebase'
+import { compose } from 'redux'
 
 // const getVisibleTodos = (todos, filter) => {
 //     switch (filter) {
@@ -26,7 +28,12 @@ const mapDispatchToProps = dispatch => ({
     fetchTodos: () => dispatch(fetchTodos())
 })
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+export default compose(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    ),
+    firestoreConnect([ // connected to rootreducer firestoreReducer
+        { collection: 'todos' }
+    ])
 )(TodoList);
