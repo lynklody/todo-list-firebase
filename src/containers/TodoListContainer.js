@@ -1,10 +1,9 @@
 import { connect } from 'react-redux'
 import TodoList from '../component/TodoList'
-import { toggleTodo, fetchTodos } from '../actions'
+import { toggleTodo, fetchTodos, fetchTodosFirebase } from '../actions'
 import { getVisibleTodos } from "../selectors"
-import { firestoreConnect, withFirestore } from 'react-redux-firebase'
+import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
-import { useSelector } from 'redux'
 
 // const getVisibleTodos = (todos, filter) => {
 //     switch (filter) {
@@ -28,9 +27,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
     toggleTodo: id => dispatch(toggleTodo(id)),
-    fetchTodos: () => dispatch(fetchTodos())
+    // fetchTodos: () => dispatch(fetchTodos()),
+    fetchTodosFirebase: (state) => dispatch(fetchTodosFirebase(state))
 })
 
 export default compose(
@@ -48,8 +48,8 @@ export default compose(
 //         connect(
 //             mapStateToProps,
 //             mapDispatchToProps,
-//             // (state) => ({
-//                 // todos: state.firestore.data.todos
-//             // })
+//             (state) => ({
+//                 todos: state.firestore.ordered.todos
+//             })
 //         )
 //     )(TodoList);

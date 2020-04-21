@@ -5,7 +5,8 @@ import { CardContent, Container } from '@material-ui/core'
 class TodoList extends Component {
 
     componentDidMount() {
-        this.props.fetchTodos();
+        // this.props.fetchTodos();
+        this.props.fetchTodosFirebase();
     }
 
     render() {
