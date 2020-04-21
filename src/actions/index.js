@@ -1,5 +1,7 @@
 import { ADD_TODO, TOGGLE_TODO, SET_FILTER, SET_TODO_TEXT, 
     FETCH_TODOS_REQUEST, FETCH_TODOS_SUCCESS, FETCH_TODOS_FAILURE } from './actionTypes'
+import TodoList from '../component/TodoList'
+import { getFirebase } from 'react-redux-firebase';
 
 let nextTodoId = 0
 
@@ -30,9 +32,53 @@ export const fetchTodos = () => {
             },
             error => {
                 dispatch(fetchTodosFailure(error));
-                console.log("Tell Wendy an error occurred: \n"+ error);
+                console.log("Tell Wendy an error occurred in fetchTodos(): \n"+ error);
             }
         )
+    }
+}
+
+// fetchTodo from firestore
+// export const fetchTodosFirebase = (state, todos) => {
+//     return (dispatch, { getFirebase }) => {
+//         const firebase = getFirebase();
+//         const data = state.firebase.todos.data;
+//         dispatch(fetchTodosRequest());
+//         firebase.collection('todos').add({
+//             ...todos,
+//             id: data.id,
+//             text: data.text,
+//             completed: data.completed,
+//         }).then((response) => {
+//                 response.json().then (data => {
+//                     dispatch(fetchTodosSuccess(data));
+//                 })
+//             },
+//             error => {
+//                 dispatch(fetchTodosFailure(error));
+//                 console.log("Tell Wendy error occurred in fetchTodosFirebase(): \n" + error);
+//             }
+//         )
+//     }
+// }
+
+// fetchTodo from firestore
+export const fetchTodosFirebase = (state) => {
+    return (dispatch, getFirebase) => {
+        const firebase = getFirebase();
+        const data = state.firebase.ordered.todos.data;
+        dispatch(fetchTodosRequest());
+        firebase.collection('todos').add({
+            ...state,
+            id: data.id,
+            text: data.text,
+            completed: data.completed,
+        }).then(() => {
+            dispatch(fetchTodos());
+            dispatch(fetchTodosSuccess(data));
+        }).catch(err => {
+            dispatch(fetchTodosFailure(err), "Tell Wendy error occurred in fetchTodosFirebase(): \n" + err);
+        });
     }
 }
 

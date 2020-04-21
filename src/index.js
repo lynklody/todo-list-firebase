@@ -11,8 +11,8 @@ import { MuiThemeProvider } from '@material-ui/core'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from './theme'
 import firebase from 'firebase/app'
-import { reduxFirestore, createFirestoreInstance, getFirestore } from 'redux-firestore'
-import { reactReduxFirebase, ReactReduxFirebaseProvider, getFirebase } from 'react-redux-firebase'
+import { reduxFirestore, createFirestoreInstance } from 'redux-firestore'
+import { ReactReduxFirebaseProvider, getFirebase } from 'react-redux-firebase'
 import fbConfig from './config/fbConfig'
 // import * as serviceWorker from './serviceWorker';
 // import store from './store'
@@ -23,12 +23,12 @@ const store = createStore(rootReducer,
     compose(
     // composeEnhancers(
         // loggerEnhancer,
-        applyMiddleware(thunkMiddleware.withExtraArgument({  // define passing extra arguments to actions frmo here
-                    getFirebase, 
-                    getFirestore 
-                }), 
+        applyMiddleware(thunkMiddleware
+            .withExtraArgument(  // define passing extra arguments to actions frmo here
+                    getFirebase
+                ), 
             loggerMiddleware),
-        reduxFirestore(firebase, fbConfig)
+        // reduxFirestore(firebase, fbConfig)
         )
     );
 
@@ -36,7 +36,7 @@ const rrfProps = {
     firebase,
     config: fbConfig,
     dispatch: store.dispatch,
-    createFirestoreInstance
+    createFirestoreInstance // need for using firestore
     };
 
 ReactDOM.render(
