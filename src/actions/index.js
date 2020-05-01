@@ -1,7 +1,6 @@
 import { ADD_TODO, TOGGLE_TODO, SET_FILTER, SET_TODO_TEXT, 
     FETCH_TODOS_REQUEST, FETCH_TODOS_SUCCESS, FETCH_TODOS_FAILURE } from './actionTypes'
-import TodoList from '../component/TodoList'
-import { getFirebase } from 'react-redux-firebase';
+import getFirebase from 'react-redux-firebase';
 
 let nextTodoId = 0
 
