@@ -20,6 +20,7 @@
     "react-redux-firebase": "^3.3.0",
     "react-scripts": "^3.4.0",
     "redux": "^4.0.5",
+    "redux-firebasev3": "^1.0.0",
     "redux-firestore": "^0.13.0",
     "redux-thunk": "^2.3.0",
     "typeface-noto-sans": "0.0.72",
