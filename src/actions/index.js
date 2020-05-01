@@ -1,5 +1,6 @@
 import { ADD_TODO, TOGGLE_TODO, SET_FILTER, SET_TODO_TEXT, 
     FETCH_TODOS_REQUEST, FETCH_TODOS_SUCCESS, FETCH_TODOS_FAILURE } from './actionTypes'
+import TodoList from '../component/TodoList'
 import { getFirebase } from 'react-redux-firebase';
 
 let nextTodoId = 0
@@ -39,7 +40,7 @@ export const fetchTodos = () => {
 
 // fetchTodo from firestore
 // export const fetchTodosFirebase = (state, todos) => {
-//     return (dispatch, getFirebase) => {
+//     return (dispatch, { getFirebase }) => {
 //         const firebase = getFirebase();
 //         const data = state.firebase.todos.data;
 //         dispatch(fetchTodosRequest());
@@ -65,7 +66,7 @@ export const fetchTodos = () => {
 export const fetchTodosFirebase = (state) => {
     return (dispatch, getFirebase) => {
         const firebase = getFirebase();
-        const data = state.firebase.todos.data['todos'];
+        const data = state.firebase.ordered.todos.data;
         dispatch(fetchTodosRequest());
         firebase.collection('todos').add({
             ...state,
