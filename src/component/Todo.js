@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { CardContent, Grid, Container } from '@material-ui/core';
 
-class Todo extends Component {
-    render() {
-        const {completed, text, onClick } = this.props;
+const Todo = (props) => {
+// class Todo extends Component {
+    // render() {
+        const {completed, text, onClick } = props;
         return (
             <Container>
             <CardContent>
@@ -20,7 +21,7 @@ class Todo extends Component {
             </CardContent>
             </Container>
         );
-    }
+    // }
 }
 
 export default Todo;

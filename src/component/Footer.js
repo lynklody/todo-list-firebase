@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Container, Box, Button, Grid } from '@material-ui/core'
 // import filter from "../App";
 
-class Footer extends Component {
-    render() {
-        const { filter, setFilter: setVisibilityFilter } = this.props;
+const Footer = (props) => {
+// class Footer extends Component {
+    // render() {
+        const { filter, setFilter: setVisibilityFilter } = props;
         // So here's a smart trick:
         // renamed setVisibilityFilter to setFilter in order to keep the original func name below
         return (
@@ -74,7 +75,7 @@ class Footer extends Component {
             </Box> 
         </Container>
         );
-    }
+    // }
 }
 
 export default Footer;

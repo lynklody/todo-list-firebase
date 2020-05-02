@@ -3,7 +3,9 @@ import { Container, Box, Button, Grid, Typography } from '@material-ui/core'
 import TextField from '@material-ui/core/TextField'
 import AddBoxIcon from '@material-ui/icons/AddBox'
 
-class AddTodo extends Component {
+
+const AddTodo = (props) => {
+// class AddTodo extends Component {
 // const AddTodo = () => {
 
     // constructor(props) {
@@ -25,21 +27,20 @@ class AddTodo extends Component {
     //         </div>
     //     );
     // }
+    const handleChange = (e) => {
+        props.setTodoText(e.target.value)
+    }
+    
+    const handleClick = () => {
+        if (props.text !== "") {
+            props.addTodo(props.text)
+            props.setTodoText("") // clear the content after input
+        } else {
+            console.log("Tell user the textfield is empty!");
+        }
+    }
 
-    // handleChange = (e) => {
-    //     this.setState({
-    //         text: e.target.value,
-    //     })
-    // }
-
-    // handleClick = () => {
-    //     this.props.addTodo(this.state.text);
-    //     this.setState({
-    //         text: '',
-    //     })
-    // }
-    // const classes = useStyles();
-    render() {
+    // render() {
         return (
             <Container>
             <Box 
@@ -71,8 +72,8 @@ class AddTodo extends Component {
                         // width="80%"
                         rows={2}
                         margin="normal"
-                        value={this.props.text}
-                        onChange={this.handleChange}
+                        value={props.text}
+                        onChange={handleChange}
                     />
                     </Grid>
                     {/* <input value={this.props.text} onChange={this.handleChange} /> */}
@@ -82,7 +83,7 @@ class AddTodo extends Component {
                     <Grid item xs={2}>
                     <Button 
                         variant="outlined"
-                        onClick={this.handleClick}
+                        onClick={handleClick}
                         startIcon={<AddBoxIcon />}
                         color="primary"
                         >
@@ -94,20 +95,9 @@ class AddTodo extends Component {
             </Box>
             </Container>
         );
-    }
+    // }
 
-    handleChange = (e) => {
-        this.props.setTodoText(e.target.value)
-    }
 
-    handleClick = () => {
-        if (this.props.text !== "") {
-            this.props.addTodo(this.props.text)
-            this.props.setTodoText("") // clear the content after input
-        } else {
-            console.log("Tell user the textfield is empty!");
-        }
-    }
 }
 
 export default AddTodo;
