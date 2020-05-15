@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Todo from "./Todo";
 import { CardContent, Container } from '@material-ui/core'
+import { fetchTodos, fetchTodosFirebase } from '../actions'
 
 // class TodoList extends Component {
 
@@ -11,7 +12,8 @@ import { CardContent, Container } from '@material-ui/core'
 
 const TodoList = (props) => {
     useEffect(() => {
-        props.fetchTodos();
+        // fetchTodos();
+        fetchTodosFirebase();
     }, [])
     // render() {
         // const {todos, toggleTodo} = this.props;

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import TodoList from '../component/TodoList'
 import { toggleTodo, fetchTodos, fetchTodosFirebase } from '../actions'
 import { getVisibleTodos } from "../selectors"
-import { firestoreConnect } from 'react-redux-firebase'
+import { firestoreConnect } from 'react-redux-firebase' // HOC
 import { compose } from 'redux'
 
 // const getVisibleTodos = (todos, filter) => {
@@ -20,10 +20,12 @@ import { compose } from 'redux'
 
 const mapStateToProps = (state) => {
     // todos: getVisibleTodos(state.todos.data, state.filter)
-    console.log("state in todolist container:")
-    console.log(state)
+    // (state, props) => ({
+    //     todos: state.firestore.ordered.todos && state.firestore.ordered.todos[props.id]
+    //   })
+    // const todoslice = state.firestore.ordered.todos && state.firestore.ordered.todos[props.id]
     return {
-        todos: getVisibleTodos(state)
+        todos: getVisibleTodos(state.firestore.ordered.todos)
     }
 }
 
@@ -34,22 +36,21 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default compose(
+    firestoreConnect(() => [ // connected to rootreducer firestoreReducer property
+        { collection: 'todos' }
+    ]),
     connect(
         mapStateToProps,
         mapDispatchToProps
-    ),
-    firestoreConnect([ // connected to rootreducer firestoreReducer property
-        { collection: 'todos' }
-    ])
+    )
 )(TodoList);
 
 // export default compose(
-//         withFirestore,
-//         connect(
-//             mapStateToProps,
-//             mapDispatchToProps,
-//             (state) => ({
-//                 todos: state.firestore.ordered.todos
-//             })
-//         )
-//     )(TodoList);
+//     firestoreConnect((props) => [ // connected to rootreducer firestoreReducer property
+//         { collection: 'todos', doc: props.id }
+//     ]),
+//     connect(
+//         mapStateToProps,
+//         mapDispatchToProps
+//     )
+// )(TodoList);

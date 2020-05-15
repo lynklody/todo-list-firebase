@@ -11,17 +11,29 @@ import { MuiThemeProvider } from '@material-ui/core'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from './theme'
 import firebase from 'firebase/app'
+import 'firebase/firestore'
 import { reduxFirestore, createFirestoreInstance } from 'redux-firestore'
 import { ReactReduxFirebaseProvider, getFirebase } from 'react-redux-firebase'
 import fbConfig from './config/fbConfig'
+import { addTodo } from './actions';
+
 // import * as serviceWorker from './serviceWorker';
 // import store from './store'
 // import './index.css';
 
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// react-redux-firebase config
+// const rrfConfig = {
+//     userProfile: 'users',
+//     useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
+//   }
+
+// Initialize other services on firebase instance
+firebase.firestore()
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, 
-    compose(
-    // composeEnhancers(
+    // compose(
+    composeEnhancers(
         // loggerEnhancer,
         applyMiddleware(thunkMiddleware
             .withExtraArgument(  // define passing extra arguments to actions frmo here
@@ -32,9 +44,18 @@ const store = createStore(rootReducer,
         )
     );
 
+// print initial state
+console.log("INITIAL STATE:")
+console.log(store.getState())
+
+// subscribe to the changes in the state
+const unsubscribe = store.subscribe(() => {
+    console.log(store.getState())
+})
+
 const rrfProps = {
     firebase,
-    config: fbConfig,
+    config: fbConfig, 
     dispatch: store.dispatch,
     createFirestoreInstance // need for using firestore
     };
@@ -50,6 +71,8 @@ ReactDOM.render(
     </Provider>,
     document.getElementById("root")
 );
+
+unsubscribe()
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
