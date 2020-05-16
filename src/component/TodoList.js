@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import Todo from "./Todo";
 import { CardContent, Container } from '@material-ui/core'
-import { fetchTodos, fetchTodosFirebase } from '../actions'
-import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase'
-import { useSelector } from 'react-redux'
+import { fetchTodos } from '../actions'
+import { isLoaded, isEmpty } from 'react-redux-firebase'
+import { getVisibleTodos } from '../selectors'
+// import { toggleTodo } from '../actions'
 
 // class TodoList extends Component {
 
@@ -12,8 +13,10 @@ import { useSelector } from 'react-redux'
         // this.props.fetchTodosFirebase();
     // }
 
+
+
 // const TodoList = (props) => {
-    const TodoList = ({firebase, todos}, props) => {
+const TodoList = ({firebase, todos}, props) => {
     // useEffect(() => {
     //     // fetchTodos();
     //     fetchTodosFirebase();
@@ -31,11 +34,15 @@ import { useSelector } from 'react-redux'
             </Container>
         )
     }
+    console.log("BEFORE", todos)
+    todos = getVisibleTodos(todos)
+    console.log("AFTER", todos)
     if (isEmpty(todos)) {
         return (
             <Container>
                 <CardContent>
-                    :( Todo list is empty
+                    No To-do item at this moment. <br/>
+                    Add something to start...
                 </CardContent>
             </Container>
         )
@@ -55,8 +62,12 @@ import { useSelector } from 'react-redux'
                 <ul>
                     { 
                         todos.map(todo => {
+                            const handleClick = (e) => {
+                                e.preventDefault()
+                                props.toggleTodo(todo.id)
+                            }
                             return <Todo key={todo.id} {...todo} 
-                             />                           
+                                onClick={handleClick} />                           
                         })
                     }
                 </ul>
