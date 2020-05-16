@@ -1,17 +1,20 @@
 import { ADD_TODO, TOGGLE_TODO, SET_FILTER, SET_TODO_TEXT, 
     FETCH_TODOS_REQUEST, FETCH_TODOS_SUCCESS, FETCH_TODOS_FAILURE } from './actionTypes'
-import getFirebase from 'react-redux-firebase';
+import firebase from 'firebase/app'
+import fbconfig from '../config/fbConfig'
+import { getFirestore } from 'redux-firestore'
+import { findAllByAltText } from '@testing-library/react'
 
 let nextTodoId = 0
 
-// sync actions
+// sync action creators
 const fetchTodosRequest = () => ({
     type: FETCH_TODOS_REQUEST
 })
 
-const fetchTodosSuccess = (data) => ({
+const fetchTodosSuccess = (payload) => ({
     type: FETCH_TODOS_SUCCESS,
-    data // todo list data
+    payload // todo list data
 })
 
 const fetchTodosFailure = (error) => ({
@@ -38,73 +41,133 @@ export const fetchTodos = () => {
 }
 
 // fetchTodo from firestore
-// export const fetchTodosFirebase = (state, todos) => {
+// export const fetchTodosFirebase = (state) => {
 //     return (dispatch, { getFirebase }) => {
 //         const firebase = getFirebase();
-//         const data = state.firebase.todos.data;
+//         let queryAll = firebase.collection('todos');
 //         dispatch(fetchTodosRequest());
-//         firebase.collection('todos').add({
-//             ...todos,
-//             id: data.id,
-//             text: data.text,
-//             completed: data.completed,
-//         }).then((response) => {
-//                 response.json().then (data => {
+//         return fetch('https://todo-backend-4142d.firebaseio.com')
+//             // .then()
+//             .then((response) => {
+//                 let v = response.json();
+//                 v.then(data => {
 //                     dispatch(fetchTodosSuccess(data));
 //                 })
-//             },
-//             error => {
-//                 dispatch(fetchTodosFailure(error));
-//                 console.log("Tell Wendy error occurred in fetchTodosFirebase(): \n" + error);
-//             }
-//         )
+//                 },
+//                 error => {
+//                     dispatch(fetchTodosFailure(error));
+//                     console.log("Tell Wendy error occurred in fetchTodosFirebase(): \n" + error);
+//                 }
+//             )
 //     }
 // }
 
 // fetchTodo from firestore
-export const fetchTodosFirebase = (state) => {
-    return (dispatch, getFirebase) => {
-        const firebase = getFirebase();
-        const data = state.firebase.ordered.todos.data;
-        dispatch(fetchTodosRequest());
-        firebase.collection('todos').add({
-            ...state,
-            id: data.id,
-            text: data.text,
-            completed: data.completed,
-        }).then(() => {
-            dispatch(fetchTodos());
-            dispatch(fetchTodosSuccess(data));
-        }).catch(err => {
-            dispatch(fetchTodosFailure(err), "Tell Wendy error occurred in fetchTodosFirebase(): \n" + err);
-        });
-    }
-}
+// export const fetchTodosFirebase = (state) => {
+//     return (dispatch, { getFirebase }) => {
+//         const firebase = getFirebase();
+//         let ref = firebase.collection('todos').doc('todo');
+//         let queryAll = ref.get()
+//             .then( snapshot => {
+//                 snapshot.forEach(doc => {
+//                     if (!doc.exists) {
+//                         console.log("No such document!");
+//                     } else {
+//                         dispatch(fetchTodosRequest);
+//                         dispatch(fetchTodosSuccess(doc));
+//                         dispatch(addTodo(doc));
+//                         console.log("DISPATCH succeed: fetchTodosSuccess");
+//                     }
+//                 })
+//             })
+//             .catch(error => {
+//                 dispatch(fetchTodosFailure(error));
+//                 console.log("Tell Wendy error occurred in fetchTodosFirebase(): \n" + error);
+//             })
+//     }
+// }
+
+// fetchTodo from firestore
+// export const fetchTodosFirebase = (state) => {
+//     return (dispatch) => {
+//         const db = firebase.getFirestore();
+//         const data = state.firestore.ordered;
+//         dispatch(fetchTodosRequest());
+//         return fetch(fbconfig.databaseURL).then(
+//             firebase.collection('todos').doc(data.id).set({
+//                 ...state,
+//                 id: data.id,
+//                 filter: data.filter,
+//                 todo: data.todo,
+//             }).then((response) => {
+//                 let v = response.json();
+//                 console.log(v);
+//                     v.then(data => {
+//                         dispatch(fetchTodosSuccess(data));
+//                     })
+//                 },
+//                 error => {
+//                     dispatch(fetchTodosFailure(error));
+//                     console.log("Tell Wendy error occurred in fetchTodosFirebase(): \n" + error);
+//                 }
+//             )
+//         )
+//     }
+// }
 
 /**
  * addTodo
  * @param {*} text 
  */
-export const addTodo = (text) => ({
-    type: ADD_TODO,
-    id: nextTodoId++,
-    text
-})
+// export const addTodo = (text) => ({
+//     type: ADD_TODO,
+//     id: nextTodoId++,
+//     text
+// })
+
+export const addTodo = (todos, text) => {
+    return (dispatch) => {
+        const firestore = getFirestore();
+        firestore.collection('todos').add({
+            ...todos,
+            id: ++nextTodoId,
+            text: text,
+            completed: false,
+            filter: 'all',
+        }).then( () => {
+            dispatch({
+                type: ADD_TODO,
+                text
+            })
+        }).catch((err) => {
+            console.log("ERR: ADDING TODO", err)
+        })
+
+    }
+}
 
 /**
  * toggleTodo
  * @param {*} id 
  */
-export const toggleTodo = id => ({
-    type: TOGGLE_TODO,
-    id
-})
+// export const toggleTodo = (id) => ({
+//     type: TOGGLE_TODO,
+//     id
+// })
+export const toggleTodo = (id) => {
+    return (dispatch) => {
+        dispatch({
+            type: TOGGLE_TODO,
+            id
+        })
+    }
+}
 
 /**
  * setFilter
  * @param {*} filter 
  */
-export const setFilter = filter => ({
+export const setFilter = (filter) => ({
     type: SET_FILTER,
     filter
 })
@@ -113,7 +176,7 @@ export const setFilter = filter => ({
  * setTodoText
  * @param {*} text 
  */
-export const setTodoText = text => ({
+export const setTodoText = (text) => ({
     type: SET_TODO_TEXT,
     text
 })
