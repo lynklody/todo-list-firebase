@@ -34,28 +34,20 @@ const mapStateToProps = ({ firestore: { ordered } }) => {
 
 
 
-const mapDispatchToProps = (dispatch) => ({
-    toggleTodo: id => dispatch(toggleTodo(id)),
+const mapDispatchToProps = (dispatch) => {
+    return {
+    toggleTodo: (id) => dispatch(toggleTodo(id)),
     // fetchTodos: () => dispatch(fetchTodos()),
     // fetchTodosFirebase: (state) => dispatch(fetchTodosFirebase(state))
-})
-
-// export default compose(
-//     firestoreConnect(() => [ // connected to rootreducer firestoreReducer property
-//         { collection: 'todos' }
-//     ]),
-//     connect(
-//         mapStateToProps,
-//         mapDispatchToProps
-//     )
-// )(TodoList);
+    }
+}
 
 export default compose(
-    firestoreConnect((props) => [ // connected to rootreducer firestoreReducer property
+    firestoreConnect(() => [ // connected to rootreducer firestoreReducer property
         { collection: 'todos' }   // under state.firestore.data
     ]),
     connect(
         mapStateToProps,
-        // mapDispatchToProps
+        mapDispatchToProps
     )
 )(TodoList);
