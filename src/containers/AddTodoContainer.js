@@ -2,6 +2,8 @@ import { connect } from 'react-redux'
 import { setTodoText, addTodo } from '../actions'
 import AddTodo from '../component/AddTodo'
 import { getText } from "../selectors"
+import { firestoreConnect } from 'react-redux-firebase' // HOC
+import { compose } from 'redux'
 
 const mapStateToProps = state => ({
     // text: state.text
@@ -13,7 +15,17 @@ const mapDispatchToProps = dispatch => ({
     addTodo: text => dispatch(addTodo(text))
 })
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AddTodo)
+// export default connect(
+//     mapStateToProps,
+//     mapDispatchToProps
+// )(AddTodo)
+
+export default compose(
+    firestoreConnect(() => [
+        { collection: 'todos' } 
+    ]),
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )
+)(AddTodo);

@@ -32,8 +32,6 @@ const mapStateToProps = ({ firestore: { ordered } }) => {
     })
 }
 
-
-
 const mapDispatchToProps = (dispatch) => {
     return {
     toggleTodo: (id) => dispatch(toggleTodo(id)),
