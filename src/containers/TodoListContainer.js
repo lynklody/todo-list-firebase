@@ -4,6 +4,8 @@ import { toggleTodo, fetchTodos, fetchTodosFirebase } from '../actions'
 import { getVisibleTodos } from "../selectors"
 import { firestoreConnect } from 'react-redux-firebase' // HOC
 import { compose } from 'redux'
+import { isLoaded } from 'react-redux-firebase'
+import { getFilter } from "../selectors"
 
 // const getVisibleTodos = (todos, filter) => {
 //     switch (filter) {
@@ -26,9 +28,15 @@ import { compose } from 'redux'
 //     }
 // }
 
-const mapStateToProps = ({ firestore: { ordered } }) => {
+// const mapStateToProps = ({ firestore: { ordered } }) => {
+const mapStateToProps = (state) => {
+    const ordered = state.firestore.ordered
     return ({
-        todos: ordered.todos,
+        // filter: getFilter(ordered.filter),
+        // toods: getVisibleTodos(ordered.todos, ordered.filter)
+        requesting: state.firestore.status.requesting,
+        filter: ordered.filter,
+        todos: ordered.todos
     })
 }
 
@@ -42,7 +50,10 @@ const mapDispatchToProps = (dispatch) => {
 
 export default compose(
     firestoreConnect(() => [ // connected to rootreducer firestoreReducer property
-        { collection: 'todos' }   // under state.firestore.data
+        // { collection: 'filter' }   // under state.firestore.data
+        // `todos/${id}`,
+        'todos',
+        'filter'
     ]),
     connect(
         mapStateToProps,
