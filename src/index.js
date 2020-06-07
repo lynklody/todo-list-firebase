@@ -15,7 +15,6 @@ import 'firebase/firestore'
 import { reduxFirestore, createFirestoreInstance } from 'redux-firestore'
 import { ReactReduxFirebaseProvider, getFirebase } from 'react-redux-firebase'
 import fbConfig from './config/fbConfig'
-import { addTodo } from './actions';
 
 // import * as serviceWorker from './serviceWorker';
 // import store from './store'
@@ -37,7 +36,7 @@ const store = createStore(rootReducer,
         // loggerEnhancer,
         applyMiddleware(thunkMiddleware
             .withExtraArgument(  // define passing extra arguments to actions frmo here
-                    getFirebase
+                    getFirebase,
                 ), 
             loggerMiddleware),
         // reduxFirestore(firebase, fbConfig)
