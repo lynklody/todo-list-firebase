@@ -22,7 +22,8 @@ const mapDispatchToProps = dispatch => ({
 
 export default compose(
     firestoreConnect(() => [
-        { collection: 'todos' } 
+        // { collection: 'todos' } 
+        'todos', 'filter'
     ]),
     connect(
         mapStateToProps,
