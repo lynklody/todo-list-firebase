@@ -32,8 +32,6 @@ import { getFilter } from "../selectors"
 const mapStateToProps = (state) => {
     const ordered = state.firestore.ordered
     return ({
-        // filter: getFilter(ordered.filter),
-        // toods: getVisibleTodos(ordered.todos, ordered.filter)
         requesting: state.firestore.status.requesting,
         filter: ordered.filter,
         todos: ordered.todos

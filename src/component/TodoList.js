@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import Todo from "./Todo";
+import React from 'react';
+import Todo from './Todo';
+import { Loading, EmptyList, EmptyFilter } from './Exceptions'
 import { CardContent, Container } from '@material-ui/core'
-import { fetchTodos } from '../actions'
 import { isLoaded, isEmpty } from 'react-redux-firebase'
 import { getVisibleTodos } from '../selectors'
 // import { toggleTodo } from '../actions'
@@ -16,37 +16,28 @@ import { getVisibleTodos } from '../selectors'
 
 
 // const TodoList = (props) => {
-const TodoList = ({firebase, todos}, props) => {
-    // useEffect(() => {
-    //     // fetchTodos();
-    //     fetchTodosFirebase();
-    // }, [])
+const TodoList = ({firebase, todos, filter, requesting}, props) => {
 
     // render() {
         // const {todos, toggleTodo} = this.props;
-    // console.log("TODOLIST compo",todos)
-    if (!isLoaded(todos)) {
+    if (!isLoaded(todos) || !isLoaded(filter)) {
+    // if (requesting.todos && requesting.filter) {
         return (
-            <Container>
-                <CardContent>
-                    Loading...
-                </CardContent>
-            </Container>
+            <Loading />
         )
     }
-    console.log("BEFORE", todos)
-    todos = getVisibleTodos(todos)
-    console.log("AFTER", todos)
     if (isEmpty(todos)) {
         return (
-            <Container>
-                <CardContent>
-                    No To-do item at this moment. <br/>
-                    Add something to start...
-                </CardContent>
-            </Container>
+            <EmptyList />
         )
     }
+    if (isEmpty(filter)) {
+        return (
+            <EmptyFilter />
+        )
+    }
+    // FILTER TODO LIST
+    todos = getVisibleTodos(todos, filter)
     return (   // isLoaded() && !isEmpty()
         <Container>
             <CardContent>
@@ -60,7 +51,7 @@ const TodoList = ({firebase, todos}, props) => {
                     }
                 </ul> */}
                 <ul>
-                    { 
+                    {
                         todos.map(todo => {
                             const handleClick = (e) => {
                                 e.preventDefault()
