@@ -49,7 +49,6 @@ export const fetchTodos = () => {
 
 export const addTodo = (newText) => {
     return (dispatch) => {
-        // const db = getFirebase();
         const db = firebase.firestore();
         db.collection('todos').add({
             text: newText,
@@ -64,7 +63,6 @@ export const addTodo = (newText) => {
         }).catch((err) => {
             console.log("ERR: ADDING TODO", err)
         })
-
     }
 }
 
@@ -89,10 +87,28 @@ export const toggleTodo = (id) => {
  * setFilter
  * @param {*} filter 
  */
-export const setFilter = (filter) => ({
-    type: SET_FILTER,
-    filter
-})
+
+export const setFilter = (filter) => {
+    return (dispatch) => {
+        const db = firebase.firestore();
+        db.collection('filter').doc('main').set({
+            filter: filter,
+        }, {merge:true})
+        .then( () => {
+            console.log("SET filter to",filter)
+            dispatch({
+                type: SET_FILTER,
+                filter
+            })
+        }).catch((err) => {
+            console.log("ERR: SETTING FILTER", err)
+        })
+    }
+}
+// export const setFilter = (filter) => ({
+//     type: SET_FILTER,
+//     filter
+// })
 
 /**
  * setTodoText
