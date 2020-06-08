@@ -7,14 +7,10 @@ import { compose } from 'redux'
 import { isLoaded } from 'react-redux-firebase'
 
 const mapStateToProps = (state) => {
-// const mapStateToProps = ({ firestore: { ordered } }) => {
     // filter: state.filter
     // filter: getFilter(state)
-    const ordered = state.firestore.ordered
-    if (isLoaded(ordered.filter)) {
-        return ({
-            filter: getFilter(ordered)
-        })
+    return {
+        filter: state.firestore.ordered.filter
     }
 }
 
