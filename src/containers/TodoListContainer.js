@@ -4,8 +4,6 @@ import { toggleTodo, fetchTodos, fetchTodosFirebase } from '../actions'
 import { getVisibleTodos } from "../selectors"
 import { firestoreConnect } from 'react-redux-firebase' // HOC
 import { compose } from 'redux'
-import { isLoaded } from 'react-redux-firebase'
-import { getFilter } from "../selectors"
 
 // const getVisibleTodos = (todos, filter) => {
 //     switch (filter) {

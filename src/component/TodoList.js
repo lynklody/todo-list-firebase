@@ -4,7 +4,6 @@ import { Loading, EmptyList, EmptyFilter } from './Exceptions'
 import { CardContent, Container } from '@material-ui/core'
 import { isLoaded, isEmpty } from 'react-redux-firebase'
 import { getVisibleTodos } from '../selectors'
-// import { toggleTodo } from '../actions'
 
 // class TodoList extends Component {
 
@@ -13,28 +12,19 @@ import { getVisibleTodos } from '../selectors'
         // this.props.fetchTodosFirebase();
     // }
 
-
-
 // const TodoList = (props) => {
-const TodoList = ({firebase, todos, filter, requesting}, props) => {
-
+const TodoList = ({ todos, filter, toggleTodo }, props) => {
     // render() {
-        // const {todos, toggleTodo} = this.props;
+        // const {todos, toggleTodo} = this.props;   
     if (!isLoaded(todos) || !isLoaded(filter)) {
     // if (requesting.todos && requesting.filter) {
-        return (
-            <Loading />
-        )
+        return ( <Loading /> )
     }
     if (isEmpty(todos)) {
-        return (
-            <EmptyList />
-        )
+        return ( <EmptyList /> )
     }
     if (isEmpty(filter)) {
-        return (
-            <EmptyFilter />
-        )
+        return ( <EmptyFilter />)
     }
     // FILTER TODO LIST
     todos = getVisibleTodos(todos, filter)
@@ -55,7 +45,8 @@ const TodoList = ({firebase, todos, filter, requesting}, props) => {
                         todos.map(todo => {
                             const handleClick = (e) => {
                                 e.preventDefault()
-                                props.toggleTodo(todo.id)
+                                toggleTodo(todo.id)
+                                console.log(todo.id)
                             }
                             return <Todo key={todo.id} {...todo} 
                                 onClick={handleClick} />                           

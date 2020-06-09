@@ -1,10 +1,8 @@
 import { connect } from 'react-redux'
 import { setFilter } from '../actions'
 import Footer from '../component/Footer'
-import { getFilter } from "../selectors"
 import { firestoreConnect } from 'react-redux-firebase' // HOC
 import { compose } from 'redux'
-import { isLoaded } from 'react-redux-firebase'
 
 const mapStateToProps = (state) => {
     // filter: state.filter
