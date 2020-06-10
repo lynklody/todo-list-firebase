@@ -1,7 +1,3 @@
-import { compose } from 'redux'
-import { connect } from 'react-redux'
-import { firestoreConnect } from 'react-redux-firebase'
-import { useSelector } from 'react-redux'
 import { isLoaded } from 'react-redux-firebase'
 
 // used in AddTodoContainer
@@ -9,9 +5,9 @@ export const getText = (state) => state.text
 
 // used in TodoListContainer / Footer Container
 export const getFilter = (state) => {
-    if (isLoaded(state.filter)) {
+    if (isLoaded(state)) {
         return(
-            state.filter[0].filter
+            state[0].filter
         )
     }
 }
@@ -22,7 +18,6 @@ export const getVisibleTodos = (todos, filter) => {
     let rtn = [];
     if (isLoaded(todos) && isLoaded(filter)) {
         const f = filter[0].filter;
-        console.log("f=",f)
         if (f === 'all') {
             return todos;
         }
