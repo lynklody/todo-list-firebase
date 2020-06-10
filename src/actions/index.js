@@ -1,39 +1,64 @@
-import { ADD_TODO, TOGGLE_TODO, SET_FILTER, SET_TODO_TEXT, 
+import { ADD_TODO, TOGGLE_TODO, SET_FILTER, SET_TODO_TEXT, GET_TODO,
     FETCH_TODOS_REQUEST, FETCH_TODOS_SUCCESS, FETCH_TODOS_FAILURE } from './actionTypes'
 import firebase from 'firebase/app'
 
 // let nextTodoId = 0
 
 // sync action creators
-const fetchTodosRequest = () => ({
-    type: FETCH_TODOS_REQUEST
-})
+// const fetchTodosRequest = () => ({
+//     type: FETCH_TODOS_REQUEST
+// })
 
-const fetchTodosSuccess = (payload) => ({
-    type: FETCH_TODOS_SUCCESS,
-    payload // todo list data
-})
+// const fetchTodosSuccess = (payload) => ({
+//     type: FETCH_TODOS_SUCCESS,
+//     payload // todo list data
+// })
 
-const fetchTodosFailure = (error) => ({
-    type: FETCH_TODOS_FAILURE,
-    error
-})
+// const fetchTodosFailure = (error) => ({
+//     type: FETCH_TODOS_FAILURE,
+//     error
+// })
 
 // invoke an async action to fetch items from a non-firestore location
-export const fetchTodos = () => {
-    return (dispatch) => { // return a function, need a middleware(redux-thunk)
-        dispatch(fetchTodosRequest());
-        return fetch('.\\mock\\initial_todos.json').then( // This is how to access file in public
-            response => {
-                response.json().then(data => {
-                    dispatch(fetchTodosSuccess(data));
-                })
-            },
-            error => {
-                dispatch(fetchTodosFailure(error));
-                console.log("Tell Wendy an error occurred in fetchTodos(): \n"+ error);
-            }
-        )
+// export const fetchTodos = () => {
+//     return (dispatch) => { // return a function, need a middleware(redux-thunk)
+//         dispatch(fetchTodosRequest());
+//         return fetch('.\\mock\\initial_todos.json').then( // This is how to access file in public
+//             response => {
+//                 response.json().then(data => {
+//                     dispatch(fetchTodosSuccess(data));
+//                 })
+//             },
+//             error => {
+//                 dispatch(fetchTodosFailure(error));
+//                 console.log("Tell Wendy an error occurred in fetchTodos(): \n"+ error);
+//             }
+//         )
+//     }
+// }
+
+/** DEAD FUNC FOR NOW
+ * getTodo: get a single document from firestore with the given id 
+ * @param {*}  
+ */
+export const getTodo = (id) => {
+    return async (dispatch) => {
+        const db = firebase.firestore();
+        await db.collection('todos').doc(id).get()
+            .then( (doc) => {
+                if (!doc.exists) {
+                    console.log("ERR: Tell Wendy no such document!")
+                } else {
+                    console.log("print todo with id",id,": ",doc.data())
+                    dispatch({
+                        type: GET_TODO,
+                        id
+                    })
+                }
+            })
+            .catch( (err) => {
+                console.log("ERR: GETTODO: ", err)
+            })
     }
 }
 
@@ -75,10 +100,39 @@ export const addTodo = (newText) => {
 //     id
 // })
 export const toggleTodo = (id) => {
-    return (dispatch) => {
-        dispatch({
-            type: TOGGLE_TODO,
-            id
+    return async (dispatch) => {
+        const db = firebase.firestore();
+        // // the following is a BUGGY version
+        // const completed = getTodo(id);
+        // console.log("completed=",completed)
+        // await db.collection('todos').doc(id).update({
+        //     completed: !completed,
+        // })
+        // .then( () => {
+        //     console.log("SET completed to", completed)
+        //     dispatch({
+        //         type: TOGGLE_TODO,
+        //         id
+        //     })
+        // }).catch((err) => {
+        //     console.log("ERR: TOGGLE TODO:", err)
+        // })
+        await db.collection('todos').doc(id).get()
+        .then((snapShot) => {
+            const data = snapShot.data()
+            console.log("SET completed to", data)
+            return ( snapShot.ref.update({
+                    completed: !data.completed,
+                    text: data.text
+                })
+            )
+        }).then(
+            dispatch({
+                type: TOGGLE_TODO,
+                id
+            })
+        ).catch((err) => {
+            console.log("ERR: TOGGLE TODO:", err)
         })
     }
 }

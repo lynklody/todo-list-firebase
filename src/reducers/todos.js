@@ -1,5 +1,5 @@
 import { ADD_TODO, TOGGLE_TODO, FETCH_TODOS_REQUEST,
-FETCH_TODOS_SUCCESS, FETCH_TODOS_FAILURE } from '../actions/actionTypes'
+FETCH_TODOS_SUCCESS, FETCH_TODOS_FAILURE, GET_TODO } from '../actions/actionTypes'
 
 const initialState = {
     isFetching: false,
@@ -71,6 +71,8 @@ const todos = (state = [], action) => {
             //         : todo
             //     })
             // }
+        case GET_TODO:
+            return state
         default:
             return state
         }
