@@ -1,5 +1,6 @@
-import { ADD_TODO, TOGGLE_TODO, SET_FILTER, SET_TODO_TEXT, GET_TODO,
-    FETCH_TODOS_REQUEST, FETCH_TODOS_SUCCESS, FETCH_TODOS_FAILURE } from './actionTypes'
+// import { ADD_TODO, TOGGLE_TODO, SET_FILTER, SET_TODO_TEXT, GET_TODO,
+//     FETCH_TODOS_REQUEST, FETCH_TODOS_SUCCESS, FETCH_TODOS_FAILURE } from './actionTypes'
+import { ADD_TODO, TOGGLE_TODO, SET_FILTER, SET_TODO_TEXT, GET_TODO } from './actionTypes'
 import firebase from 'firebase/app'
 
 // let nextTodoId = 0

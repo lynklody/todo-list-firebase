@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react'
 import { Container, Box, Button, Grid, Typography } from '@material-ui/core'
 import TextField from '@material-ui/core/TextField'
 import AddBoxIcon from '@material-ui/icons/AddBox'

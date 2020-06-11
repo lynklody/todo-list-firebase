@@ -6,13 +6,13 @@ import rootReducer from './reducers'
 import thunkMiddleware from 'redux-thunk'
 import App from './component/App'
 import loggerMiddleware from './middlewares/logger'
-import loggerEnhancer from "./enhancers/logger"
+// import loggerEnhancer from "./enhancers/logger"
 import { MuiThemeProvider } from '@material-ui/core'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from './theme'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
-import { reduxFirestore, createFirestoreInstance } from 'redux-firestore'
+import { createFirestoreInstance } from 'redux-firestore'
 import { ReactReduxFirebaseProvider, getFirebase } from 'react-redux-firebase'
 import fbConfig from './config/fbConfig'
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 // import AddTodo from "./component/AddTodo";
 // import TodoList from "./component/TodoList";
 // import Footer from "./component/Footer";
@@ -13,7 +13,7 @@ import { blue } from '@material-ui/core/colors'
 import CardHeader from '@material-ui/core/CardHeader'
 import { useContainedCardHeaderStyles } from '@mui-treasury/styles/cardHeader/contained'
 import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded'
-import { useSoftRiseShadowStyles } from '@mui-treasury/styles/shadow/softRise'
+// import { useSoftRiseShadowStyles } from '@mui-treasury/styles/shadow/softRise'
 
 // const todos = [
 //     {
@@ -80,7 +80,7 @@ const App = () => {
         const classes = useStyles();
         const cardHeaderShadowStyles = useFadedShadowStyles();
         const cardHeaderStyles = useContainedCardHeaderStyles();
-        const cardShadowStyles = useSoftRiseShadowStyles({ inactive: true });
+        // const cardShadowStyles = useSoftRiseShadowStyles({ inactive: true });
         return (
             <Container> {/**material-ui container */}
             <Box 
@@ -102,8 +102,8 @@ const App = () => {
                         <CardHeader
                             className={cardHeaderShadowStyles.root}
                             classes={cardHeaderStyles}
-                            title={'Change me'}
-                            subheader={'My To-Do List App'}
+                            title={'MY TO-DO LIST'}
+                            subheader={'A To-Do List Sample App'}
                         />
                     </Typography>
                     <Box display="flex" 
