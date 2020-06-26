@@ -79,7 +79,7 @@ export const addTodo = (newText) => {
         db.collection('todos').add({
             text: newText,
             completed: false,
-            filter: 'all',
+            timestamp: new Date()
         }).then((ref) => {
             console.log("ADDED doc to fs WITH ID", ref.id)
             dispatch({

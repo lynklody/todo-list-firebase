@@ -47,7 +47,8 @@ export default compose(
     firestoreConnect(() => [ // connected to rootreducer firestoreReducer property
         // { collection: 'filter' }   // under state.firestore.data
         // `todos/${id}`,
-        'todos',
+        // 'todos',
+        { collection: 'todos', orderBy: ['timestamp', 'asc']},
         'filter'
     ]),
     connect(
