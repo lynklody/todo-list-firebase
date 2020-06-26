@@ -5,11 +5,11 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "filter",
-          "order": "ASCENDING"
+          "fieldPath": "timestamp",
+          "order": "DESCENDING"
         },
         {
-          "fieldPath": "todos",
+          "fieldPath": "text",
           "order": "ASCENDING"
         }
       ]
