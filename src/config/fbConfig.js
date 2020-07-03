@@ -1,6 +1,7 @@
  import firebase from 'firebase/app'   // core functionality of fb
  import 'firebase/firestore'           // database
  import 'firebase/auth'
+ import * as firebaseui from 'firebaseui'
  
   // Your web app's Firebase configuration
 
@@ -19,7 +20,11 @@
   firebase.initializeApp(firebaseConfig);
   // firebase.analytics();
 
-  // the net ninja
-  // firebase.firestore().settings({ timestampsInSnapShots: true})
+  // Initialize the FirebaseUI Widget using Firebase.
+  const ui = new firebaseui.auth.AuthUI(firebase.auth());
 
-  export default firebase;
+// Google OAuth Client ID, needed to support One-tap sign-up.
+// Set to null if One-tap sign-up is not supported.
+// const CLIENT_ID = 'YOUR_OAUTH_CLIENT_ID';
+
+export default firebase;
