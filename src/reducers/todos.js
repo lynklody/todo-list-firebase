@@ -8,7 +8,7 @@ const initialState = {
 }
 
 // modified reducer func for async actions
-const reducer = (state = initialState, action) => {
+const todosReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_TODOS_REQUEST:
             return {
@@ -78,4 +78,4 @@ const todos = (state = [], action) => {
         }
 }
 
-export default reducer;
+export default todosReducer;

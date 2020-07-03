@@ -10,3 +10,4 @@ npm install redux-firebase
 <br/>
 npm i redux-firestore
 <br/>
+npm i firebaseui
