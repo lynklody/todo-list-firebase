@@ -17,18 +17,18 @@ Currently under development will add more features soon~ :kissing_heart:
      npm i redux
      npm i react-redux
 
-<h3>Firebase/Firestore</h3>
+<h4>Firebase/Firestore</h4>
 
     npm i firebase  or  npm install firebase-tools (recommended to install firebase globally)
     npm i react-redux-firebase
     npm i redux-firebase
     npm i redux-firestore
     
-<h3>for firebase authentication</h3>
+<h4>for firebase authentication</h4>
 
     npm i firebaseui
 
-<h3>material-UI</h3>
+<h4>material-UI</h4>
 <h5>material-UI core</h5>
 
     npm install @material-ui/core
