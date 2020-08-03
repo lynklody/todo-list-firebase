@@ -7,7 +7,7 @@ Deployed at Firebase hosting:globe_with_meridians: : https://todo-backend-4142d.
 Currently under development will add more features soon~ :kissing_heart:
 
 
-<h1>Core Dependencies</h1>
+<h3>Core Dependencies</h3>
 (below are commands for installation with <b>npm</b> only)
 
 <h5>react</h5>
