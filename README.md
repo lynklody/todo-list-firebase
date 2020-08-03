@@ -10,26 +10,26 @@ Currently under development will add more features soon~ :kissing_heart:
 <h3>Core Dependencies</h3>
 (below are commands for installation with <b>npm</b> only)
 
-<h5>react</h5>
+<h5>React / Redux</h5>
   
      npm i react
      npm i react-dom
      npm i redux
      npm i react-redux
 
-<h4>Firebase/Firestore</h4>
+<h4>Firebase / Firestore</h4>
 
     npm i firebase  or  npm install firebase-tools (recommended to install firebase globally)
     npm i react-redux-firebase
     npm i redux-firebase
     npm i redux-firestore
     
-<h4>for firebase authentication</h4>
+<h4>Firebase authentication UI component</h4>
 
     npm i firebaseui
 
-<h4>material-UI</h4>
-<h5>material-UI core</h5>
+<h4>Material-UI</h4>
+<h5>Material-UI core</h5>
 
     npm install @material-ui/core
 
