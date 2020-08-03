@@ -1,4 +1,4 @@
-<h3>A Todo list app </h3> <h3>developed with ReactJS & Redux & material-UI </h3>
+<h2>A <b>Todo list app</b> developed with ReactJS & Redux & material-UI & Firebase/Firestore </h2>
 <br/>
 Deployed at GitHub Pages:globe_with_meridians: : https://lynklody.github.io/todo-list/ 
 <br/>
