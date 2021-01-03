@@ -47,7 +47,7 @@ const AddTodo = (props) => {
     const worker = createWorker({
         logger: m => console.log(m)
     })
-    const [ocr, setOcr] = useState('...')
+    const [ocr, setOcr] = useState('')
     // FOR TEST
     // const imgLink = 'https://tesseract.projectnaptha.com/img/eng_bw.png'
     const imgLink = './eng.png'
@@ -61,7 +61,6 @@ const AddTodo = (props) => {
     }
 
     useEffect(() => {
-        // handleOCR();
         props.setTodoText(ocr)
     })
 
@@ -107,7 +106,6 @@ const AddTodo = (props) => {
                         onClick={this.handleClick}
                         >Add</button> */}
                     <Grid item xs={2}>
-                        {console.log(props.text)}
                     <Button 
                         variant="outlined"
                         onClick={handleClick}
@@ -125,7 +123,7 @@ const AddTodo = (props) => {
                         >
                             Read from Img
                     </Button>
-                    <CardContent>{ocr}</CardContent>
+                    {/* <CardContent>{ocr}</CardContent> */}
                 </Grid>
             </Typography>
             </Box>
