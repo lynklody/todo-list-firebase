@@ -1,5 +1,5 @@
 // previously App.js
-import React from 'react'
+import React, {useEffect} from 'react'
 // import AddTodo from "./component/AddTodo";
 // import TodoList from "./component/TodoList";
 // import Footer from "./component/Footer";
@@ -15,6 +15,8 @@ import CardHeader from '@material-ui/core/CardHeader'
 import { useContainedCardHeaderStyles } from '@mui-treasury/styles/cardHeader/contained'
 import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded'
 import NavigationBar from './NavigationBar'
+
+// import {InlineWidget} from 'react-calendly'
 
 
 // const todos = [
@@ -62,7 +64,17 @@ const useStyles = makeStyles( ({spacing}) => ({
     }
 }));
 
-
+// const board = () => {
+//     return(
+//         <div>
+//             <InlineWidget url="https://calendly.com/wendy-liu001/60min"/>
+//             {/* <!-- Calendly inline widget begin --> */}
+//             {/* <div class="calendly-inline-widget" data-url="https://calendly.com/wendy-liu001/60min" style="min-width:320px;height:630px;"></div> */}
+//             {/* <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script> */}
+//             {/* <!-- Calendly inline widget end --> */}
+//         </div>
+//     )
+// }
 
 const Dashboard = () => {
 // class App extends Component {
@@ -79,6 +91,20 @@ const Dashboard = () => {
     // render() {
         // const todos = this.getVisibleTodos();
         // const {filter} = this.props;
+
+        const minWidth = "320px"
+        const height = "630px"
+        const url = "https://calendly.com/wendy-liu001/60min"
+        useEffect(() => {
+            const head = document.querySelector('head');
+            const script = document.createElement('script');
+            script.setAttribute(
+            'src',
+            'https://assets.calendly.com/assets/external/widget.js'
+            );
+            head.appendChild(script);
+        }, []);
+
         const classes = useStyles();
         const cardHeaderShadowStyles = useFadedShadowStyles();
         const cardHeaderStyles = useContainedCardHeaderStyles();
@@ -91,7 +117,6 @@ const Dashboard = () => {
                 alignItems="center" >
             <Box display="left">
                 {/* <Card> */}
-
                     <NavigationBar />
 
                 {/* </Card> */}
@@ -119,6 +144,14 @@ const Dashboard = () => {
                             subheader={'A To-Do List Sample App'}
                         />
                     </Typography>
+                    <Box>
+                        {/* calenderly embed */}
+                        <div
+                            className="calendly-inline-widget"
+                            data-url={url}
+                            style={{ minWidth, height }}
+                        />
+                    </Box>
                     <Box display="flex" 
                     alignItems="center" 
                     justifyContent="center"
@@ -143,7 +176,6 @@ const Dashboard = () => {
                     alignItems="center" 
                     justifyContent="center" 
                     >
-
                         <FooterContainer />
 
                     </Box>
